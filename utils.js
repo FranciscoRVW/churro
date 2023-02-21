@@ -10,6 +10,17 @@ function onOpen() {
 }
 */
 
+/**
+ * Calculates the local time based on the time difference in hours
+ * versus the target time zone
+ * @param {number} timeDifference - Time difference in hours
+ * @return {Date} localDate - Date object adjusted by the time difference
+ */
+function timeNow(timeDifference){
+  let localDate = new Date
+  localDate.setHours(localDate.getHours() + timeDifference)
+  return localDate
+}
 
 /**
  * Sends emails from sheet data.
