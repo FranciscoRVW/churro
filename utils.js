@@ -23,6 +23,21 @@ function timeNow(timeDifference){
 }
 
 /**
+ * Calculates the time in days between the employee's hire date and the current date
+ * @param {string} date - ISO 8601 compliant date string
+ * @return {number} timeSpan - The time in days elapsed between the hire date and the
+ * current date
+ */
+function hireDateSpan(date) {
+  let today = new Date
+  let hireDate = new Date(date)
+  let span = (today - hireDate) / (24*60*60*1000)
+  return span
+}
+
+hireDateSpan()
+
+/**
  * Sends emails from sheet data.
  * @param {string} subjectLine (optional) for the email draft message
  * @param {Sheet} sheet to read data from
