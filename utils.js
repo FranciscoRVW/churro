@@ -37,6 +37,47 @@ function hireDateSpan(date) {
 
 hireDateSpan()
 
+
+/**
+ * Determine if under the arguments conditions the email should
+ * be sent to the recipient or not.
+ * @param {string} timeZone - Timezone of the recipient.
+ * @param {string} hireDate - ISO 8601 compliant date string of the employee
+ * hiring date.
+ * @param {number} stageSpan - Integer representing the minimum time elapsed
+ * from the hiring date to email sending.
+ * @param {string} emailSent - If the contents of the cell are empty, the email
+ * will be sent
+ * @return {boolean} sendMails
+ */
+function mailSendingRules(
+  timeZone='mexico', 
+  hireDate='2100-01-01', 
+  stageSpan=10000, 
+  emailSent = 'not_empty'
+  ){
+  const TIMEZONES = {
+    mexico: 0,
+    spain: 7,
+    vietnam: 13
+  };
+  let localTime = timeNow(TIMEZONES[timeZone.toLowerCase()]);
+
+  let sendMails = true;
+
+  while (sendMails) {
+    if (emailSent != '') { sendMails = false };
+    if (localTime.getHours() < 9) { sendMails = false };
+    if (localTime.getHours() > 17) { sendMails = false };
+    if (localTime.getDay() === 0) { sendMails = false };
+    if (localTime.getDay() === 6) { sendMails = false };
+    if (timeSpan(hireDate) < stageSpan) { sendMails = false };
+    return sendMails;
+  }
+}
+
+
+
 /**
  * Sends emails from sheet data.
  * @param {string} subjectLine (optional) for the email draft message
